@@ -1,0 +1,26 @@
+{
+  "name": "10up/wordpress-primary-category",
+  "description": "Wordpress Primary Category",
+  "authors": [
+    {
+      "name": "Author",
+      "email": "info@10up.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "WordpressPrimaryCategory\\": "includes/classes/"
+    }
+  },
+  "require-dev": {
+    "10up/wp_mock": "dev-dev",
+    "10up/phpcs-composer": "dev-master"
+  },
+  "scripts": {
+    "lint": "phpcs .",
+    "lint-fix": "phpcbf ."
+  }
+}
