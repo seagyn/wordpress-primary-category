@@ -47,14 +47,9 @@ const config = {
 	stats: {
 		colors: true
 	},
-	/*
-	Uncomment this if you need to exclude dependencies from the output bundles,
-	like if WordPress is including jQuery (for example).
-
 	externals: {
 		jquery: 'jQuery'
 	}
-	*/
 };
 
 module.exports = config;

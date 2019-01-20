@@ -1,1 +1,5 @@
-//import foo from './bar'
+import ClassicEditor from './classic-editor';
+
+window.addEventListener( 'DOMContentLoaded', () => {
+	ClassicEditor();
+} );

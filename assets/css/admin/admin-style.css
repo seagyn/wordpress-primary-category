@@ -1,3 +1,32 @@
 /**
- * WordpressPrimaryCategory - Admin Styles
+ * WordPressPrimaryCategory - Admin Styles
  */
+:root {
+	--alert-color: rgb(255, 255, 255);
+	--primary-indicator-colour: rgb(119, 119, 119);
+}
+
+.wpc-primary,
+.wpc-primary-selector {
+	float: right;
+}
+
+.wpc-primary-selector {
+	opacity: 1;
+	visibility: visible;
+}
+
+.wpc-primary-selector.updating {
+	opacity: 0;
+	transition: visibility 0s 1s, opacity 1s linear;
+	visibility: hidden;
+}
+
+.wpc-primary {
+	color: var(--primary-indicator-colour);
+}
+
+.wpc-error {
+	color: var(--alert-color);
+	float: right;
+}

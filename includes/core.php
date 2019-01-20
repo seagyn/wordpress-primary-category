@@ -2,10 +2,10 @@
 /**
  * Core plugin functionality.
  *
- * @package WordpressPrimaryCategory
+ * @package WordPressPrimaryCategory
  */
 
-namespace WordpressPrimaryCategory\Core;
+namespace SeagynDavis\WordPressPrimaryCategory\Core;
 
 use \WP_Error as WP_Error;
 
@@ -30,7 +30,7 @@ function setup() {
 	// Hook to allow async or defer on asset loading.
 	add_filter( 'script_loader_tag', $n( 'script_loader_tag' ), 10, 2 );
 
-	\WordpressPrimaryCategory\RestAPI\setup();
+	\SeagynDavis\WordPressPrimaryCategory\RestAPI\setup();
 
 	do_action( 'wordpress_primary_category_loaded' );
 }
@@ -42,8 +42,15 @@ function setup() {
  */
 function i18n() {
 	$locale = apply_filters( 'plugin_locale', get_locale(), 'wordpress-primary-category' );
-	load_textdomain( 'wordpress-primary-category', WP_LANG_DIR . '/wordpress-primary-category/wordpress-primary-category-' . $locale . '.mo' );
-	load_plugin_textdomain( 'wordpress-primary-category', false, plugin_basename( WORDPRESS_PRIMARY_CATEGORY_PATH ) . '/languages/' );
+	load_textdomain(
+		'wordpress-primary-category',
+		WP_LANG_DIR . '/wordpress-primary-category/wordpress-primary-category-' . $locale . '.mo'
+	);
+	load_plugin_textdomain(
+		'wordpress-primary-category',
+		false,
+		plugin_basename( WORDPRESS_PRIMARY_CATEGORY_PATH ) . '/languages/'
+	);
 }
 
 /**
@@ -97,7 +104,10 @@ function get_enqueue_contexts() {
 function script_url( $script, $context ) {
 
 	if ( ! in_array( $context, get_enqueue_contexts(), true ) ) {
-		return new WP_Error( 'invalid_enqueue_context', 'Invalid $context specified in WordpressPrimaryCategory script loader.' );
+		return new WP_Error(
+			'invalid_enqueue_context',
+			'Invalid $context specified in WordPressPrimaryCategory script loader.'
+		);
 	}
 
 	return ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ?
@@ -117,7 +127,10 @@ function script_url( $script, $context ) {
 function style_url( $stylesheet, $context ) {
 
 	if ( ! in_array( $context, get_enqueue_contexts(), true ) ) {
-		return new WP_Error( 'invalid_enqueue_context', 'Invalid $context specified in WordpressPrimaryCategory stylesheet loader.' );
+		return new WP_Error(
+			'invalid_enqueue_context',
+			'Invalid $context specified in WordPressPrimaryCategory stylesheet loader.'
+		);
 	}
 
 	return ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ?
@@ -138,16 +151,6 @@ function admin_scripts( $hook ) {
 		return;
 	}
 
-	global $post;
-
-	wp_enqueue_script(
-		'wordpress_primary_category_shared',
-		script_url( 'shared', 'shared' ),
-		[],
-		WORDPRESS_PRIMARY_CATEGORY_VERSION,
-		true
-	);
-
 	wp_enqueue_script(
 		'wordpress_primary_category_admin',
 		script_url( 'admin', 'admin' ),
@@ -156,17 +159,20 @@ function admin_scripts( $hook ) {
 		true
 	);
 
+	$post = get_post();
+
 	$primary_category_id = \get_post_meta( $post->ID, '_primary_category_id', true );
 
 	$localized_data = [
-		'label'               => __( 'Make Primary', 'wordpress-primary-categories' ),
-		'link_title'          => __( 'Set as the primary category.', 'wordpress-primary-categories' ),
-		'nonce'               => \wp_create_nonce( 'wpc-nonce' ),
-		'primary_category_id' => $primary_category_id,
+		'label'             => __( 'Make Primary', 'wordpress-primary-categories' ),
+		'currentLabel'      => __( 'Current Primary', 'wordpress-primary-categories' ),
+		'linkTitle'         => __( 'Set as the primary category.', 'wordpress-primary-categories' ),
+		'primaryCategoryId' => $primary_category_id,
+		'endpoint'          => get_rest_url( null, 'wpc/v1/set' ),
 	];
 	\wp_localize_script(
-		'wordpress-primary-categories',
-		'wpc_data',
+		'wordpress_primary_category_admin',
+		'wpcData',
 		$localized_data
 	);
 
@@ -183,13 +189,6 @@ function admin_styles( $hook ) {
 	if ( ! in_array( $hook, [ 'edit.php', 'post.php' ], true ) ) {
 		return;
 	}
-
-	wp_enqueue_style(
-		'wordpress_primary_category_shared',
-		style_url( 'shared-style', 'shared' ),
-		[],
-		WORDPRESS_PRIMARY_CATEGORY_VERSION
-	);
 
 	wp_enqueue_style(
 		'wordpress_primary_category_admin',

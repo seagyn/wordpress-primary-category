@@ -1,5 +1,5 @@
 <?php
-namespace WordpressPrimaryCategory\Core;
+namespace WordPressPrimaryCategory\Core;
 
 /**
  * This is a very basic test case to get things started. You should probably rename this and make
@@ -13,7 +13,7 @@ namespace WordpressPrimaryCategory\Core;
  *   - https://github.com/10up/wp_mock
  */
 
-use WordpressPrimaryCategory as Base;
+use WordPressPrimaryCategory as Base;
 
 class Core_Tests extends Base\TestCase {
 
@@ -26,8 +26,8 @@ class Core_Tests extends Base\TestCase {
 	 */
 	public function test_setup() {
 		// Setup
-		\WP_Mock::expectActionAdded( 'init', 'WordpressPrimaryCategory\Core\i18n' );
-		\WP_Mock::expectActionAdded( 'init', 'WordpressPrimaryCategory\Core\init' );
+		\WP_Mock::expectActionAdded( 'init', 'WordPressPrimaryCategory\Core\i18n' );
+		\WP_Mock::expectActionAdded( 'init', 'WordPressPrimaryCategory\Core\init' );
 		\WP_Mock::expectAction( 'wordpress_primary_category_loaded' );
 
 		// Act

@@ -12,7 +12,7 @@
   },
   "autoload": {
     "psr-4": {
-      "WordpressPrimaryCategory\\": "includes/classes/"
+      "WordPressPrimaryCategory\\": "includes/classes/"
     }
   },
   "require-dev": {

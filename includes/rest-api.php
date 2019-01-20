@@ -5,7 +5,7 @@
  * @package WPC
  */
 
-namespace WordpressPrimaryCategory\RestAPI;
+namespace SeagynDavis\WordPressPrimaryCategory\RestAPI;
 
 use \WP_REST_Request as WP_REST_Request;
 
@@ -38,36 +38,33 @@ function define_endpoint_for_setting_primary_category() {
 		array(
 			'methods'             => \WP_REST_Server::CREATABLE,
 			'callback'            => __NAMESPACE__ . '\handle_request',
-			'permission_callback' => __NAMESPACE__ . '\can_user_request',
+			'permission_callback' => function () {
+				return \current_user_can( 'edit_posts' );
+			},
 			'args'                => array(
 				'category_id'     => array(
 					'required'          => true,
 					'sanitize_callback' => 'sanitize_text_field',
+					'validate_callback' => function ( $param, $request, $key ) {
+						return is_numeric( $param );
+					},
 				),
 				'post_id'         => array(
 					'required'          => true,
 					'sanitize_callback' => 'sanitize_text_field',
+					'validate_callback' => function ( $param, $request, $key ) {
+						return is_numeric( $param );
+					},
 				),
 				'old_category_id' => array(
-					'required'          => true,
 					'sanitize_callback' => 'sanitize_text_field',
+					'validate_callback' => function ( $param, $request, $key ) {
+						return is_numeric( $param );
+					},
 				),
 			),
 		)
 	);
-}
-
-/**
- * Checks to see if the user can edit the post.
- *
- * @return boolean
- */
-function can_user_request() {
-	if ( ! \current_user_can( 'edit_posts' ) ) {
-		return false;
-	}
-
-	return true;
 }
 
 /**
@@ -78,14 +75,14 @@ function can_user_request() {
  * @return \WP_REST_Response
  */
 function handle_request( WP_REST_Request $request ) {
-	$category_id     = $request->get_param( 'category' );
-	$post_id         = $request->get_param( 'post_id' );
-	$old_category_id = $request->get_param( 'old_category_id' );
+	$category_id     = intval( $request->get_param( 'category_id' ) );
+	$post_id         = intval( $request->get_param( 'post_id' ) );
+	$old_category_id = $request->get_param( 'old_category_id' ) ? intval( $request->get_param( 'old_category_id' ) ) : null;
 
 	if (
 		absint( $category_id ) === $category_id &&
 		absint( $post_id ) === $post_id &&
-		absint( $old_category_id ) === $old_category_id
+		( is_null( $old_category_id ) || absint( $old_category_id ) === $old_category_id )
 	) {
 		\update_post_meta( $post_id, '_primary_category_id', $category_id, $old_category_id );
 		$response = [
