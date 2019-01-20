@@ -9,6 +9,29 @@ This plugin gives you the ability to set a selected category as the primary cate
 * Future: There might be a use case for someone to alter the category loop query to only show posts with the same primary category but that could lead to a weird user experience.
 * Future: Make a REST API endpoint available to get posts by primary category.
 
+## Dependencies
+
+1. [Node & NPM](https://www.npmjs.com/get-npm) - Build packages and 3rd party dependencies are managed through NPM, so you will need that installed globally
+2. [Gulp](https://gulpjs.com/) - Gulp is used as the main task runner, it runs PostCSS, processes images, handles SVG sprites (if needed), and executes Webpack
+3. [Webpack](https://webpack.js.org/) - Webpack is used to process the JavaScript
+4. [Composer](https://getcomposer.org/) - Composer is used to manage PHP.
+
+## NPM Commands
+
+`npm run start` (install dependencies and run initial gulp)
+
+`npm run watch` (watch)
+
+`npm run build` (build all front-end files)
+
+`npm run build-release` (build all front-end files for release)
+
+## Composer Commands
+
+`composer lint` (lint PHP files)
+
+`composer lint-fix` (lint PHP files and automatically correct coding standard violations)
+
 ## Usage
 
 Once enabled, the plugin gives the ability to make a selected category the primary category for the post. **Note: The post must be saved before marking a category as saved.**

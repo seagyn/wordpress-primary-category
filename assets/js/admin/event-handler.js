@@ -67,11 +67,11 @@ export const setPrimaryCategory = ( primaryElement, categoryId ) => {
 				currentPrimaryElement.remove();
 			}
 		} else {
-			alert( 'Could not set primary category. Please try again.' );
+			alert( 'Could not set primary category. Please try again.' ); // Would like suggestions from a UX perspective on how to handle this error message.
 			primaryElement.setAttribute( 'class', 'wpc-primary-selector' );
 		}
 	} ).catch( () => {
-		alert( 'Could not set primary category. Please try again.' );
+		alert( 'Could not set primary category. Please try again.' ); // Would like suggestions from a UX perspective on how to handle this error message.
 		primaryElement.setAttribute( 'class', 'wpc-primary-selector' );
 	} );
 };
