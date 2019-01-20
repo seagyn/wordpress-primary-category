@@ -7,6 +7,7 @@
 
 /* global wpcData, wpApiSettings */
 
+import apiFetch from '@wordpress/api-fetch';
 import { addPrimaryElement } from './helper-functions';
 
 /**
@@ -46,16 +47,13 @@ export const setPrimaryCategory = ( primaryElement, categoryId ) => {
 		'old_category_id': currentCategoryId
 	};
 
-	// Note: we are not worrying about a pollyfill for these 2 for now but it should be handled if this was to be made public.
-	fetch( wpcData.endpoint, {
-		body: JSON.stringify( postData ),
+	apiFetch( {
+		url: `${wpApiSettings.root}wpc/v1/set`,
+		data: postData,
 		headers: {
-			'Content-Type': 'application/json',
 			'X-WP-Nonce': wpApiSettings.nonce
 		},
 		method: 'POST'
-	} ).then( response => {
-		return response.json();
 	} ).then( data => {
 		if ( data.success ) {
 			wpcData.primaryCategoryId = categoryId;

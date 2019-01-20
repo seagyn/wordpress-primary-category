@@ -75,6 +75,8 @@
     "node": ">=8.11"
   },
   "dependencies": {
+    "@wordpress/api-fetch": "^2.2.8",
+    "@wordpress/dom-ready": "^2.0.2",
     "normalize.css": "^8.0.0"
   },
   "browserSync": {

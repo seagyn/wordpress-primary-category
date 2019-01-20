@@ -168,7 +168,6 @@ function admin_scripts( $hook ) {
 		'currentLabel'      => __( 'Current Primary', 'wordpress-primary-categories' ),
 		'linkTitle'         => __( 'Set as the primary category.', 'wordpress-primary-categories' ),
 		'primaryCategoryId' => $primary_category_id,
-		'endpoint'          => get_rest_url( null, 'wpc/v1/set' ),
 	];
 	\wp_localize_script(
 		'wordpress_primary_category_admin',

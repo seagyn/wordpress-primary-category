@@ -1,5 +1,13 @@
+import domReady from '@wordpress/dom-ready';
 import ClassicEditor from './classic-editor';
+import BlockEditor from './block-editor';
 
-window.addEventListener( 'DOMContentLoaded', () => {
-	ClassicEditor();
+/* global wp */
+
+domReady( () => {
+	if ( wp.blocks ) {
+		BlockEditor();
+	} else {
+		ClassicEditor();
+	}
 } );

@@ -1,5 +1,7 @@
 # Primary Categories for WordPress
 
+**Note: this plugin currently only works on the classic editor.**
+
 This plugin gives you the ability to set a selected category as the primary category for a post or custom post type.
 
 * Set a primary category on posts and custom post types (if they're using built-in categories)
